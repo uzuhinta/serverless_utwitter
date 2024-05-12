@@ -4,16 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "sls": "sls"
+    "sls": "sls",
+    "export-env": "sls -- export-env --all --overwrite",
+    "integration-test": "jest --verbose ./__tests__/test_cases/integration --silent",
+    "e2e-test": "jest --verbose ./__tests__/test_cases/e2e --silent"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.5.12",
     "aws-sdk": "^2.1617.0",
-    "chance": "^1.1.11",
+    "dotenv": "^16.4.5",
+    "jest": "^29.7.0",
     "serverless": "^3.38.0",
     "serverless-appsync-plugin": "^2.7.0",
+    "serverless-export-env": "github:arabold/serverless-export-env",
     "serverless-iam-roles-per-function": "^3.2.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.574.0",
+    "@aws-sdk/client-dynamodb": "^3.574.0",
+    "@aws-sdk/lib-dynamodb": "^3.574.0",
+    "chance": "^1.1.11"
   }
 }

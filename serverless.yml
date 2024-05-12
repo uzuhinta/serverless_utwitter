@@ -4,6 +4,7 @@ frameworkVersion: '3'
 plugins:
   - serverless-appsync-plugin
   - serverless-iam-roles-per-function
+  - serverless-export-env
 
 provider:
   name: aws
@@ -13,6 +14,9 @@ provider:
   environment:
     STAGE: ${self:custom.stage}
     AWS_NODEJS_CONNECTION_REUSE_ENABLE: '1'
+    # AWS_REGION: ${self:custom.region}
+    # COGNITO_USER_POOL_ID: !Ref CognitoUserPool
+    # WEB_COGNITO_USER_POOL_CLIENT_ID: !Ref WebUserPoolClient
 
 package:
   exclude:
@@ -22,6 +26,7 @@ package:
 appSync: ${file(serverless.appsync-api.yml)}
 
 custom:
+  region: ${opt:region, self:provider.region}
   stage: ${opt:stage, self:provider.stage}
 
 functions:
@@ -90,5 +95,7 @@ resources:
           - ALLOW_REFRESH_TOKEN_AUTH
         PreventUserExistenceErrors: ENABLED
   Outputs:
+    AwsRegion:
+      Value: ${self:custom.region}
     CognitoUserPoolId:
       Value: !Ref CognitoUserPool

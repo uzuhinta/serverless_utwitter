@@ -1,5 +1,8 @@
-const DynamoDB = require('aws-sdk/clients/dynamodb');
-const DocumentClient = new DynamoDB.DocumentClient();
+const { DynamoDBDocument } = require('@aws-sdk/lib-dynamodb');
+
+const { DynamoDB } = require('@aws-sdk/client-dynamodb');
+
+const DocumentClient = DynamoDBDocument.from(new DynamoDB());
 const Chance = require('chance');
 const chance = new Chance();
 const { USER_TABLE } = process.env;
@@ -18,7 +21,7 @@ module.exports.handler = async (event) => {
     id: event.userName,
     name,
     screenName,
-    createdAt: new Date.toString(),
+    createdAt: new Date().toJSON(),
     followersCount: 0,
     followingCount: 0,
     tweetsCount: 0,
@@ -28,8 +31,8 @@ module.exports.handler = async (event) => {
     await DocumentClient.put({
       TableName: USER_TABLE,
       Item: user,
-      ConditionExpression: 'attribute_not_exist(id)',
-    }).promise();
+      ConditionExpression: 'attribute_not_exists(id)',
+    });
     return event;
   } else {
     return event;
