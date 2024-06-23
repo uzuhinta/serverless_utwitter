@@ -6,4 +6,18 @@ authentication:
     awsRegion: us-east-1
     defaultAction: ALLOW
     userPoolId: !Ref CognitoUserPool
- 
+
+resolvers:
+  Query.getMyProfile:
+    functions:
+      - dataSource: usersTable
+        request: mapping-templates/Query.getMyProfile.request.vtl
+        response: mapping-templates/Query.getMyProfile.response.vtl
+
+dataSources:
+  usersTable:
+    type: AMAZON_DYNAMODB
+    config:
+      tableName: !Ref UsersTable
+  none:
+    type: NONE

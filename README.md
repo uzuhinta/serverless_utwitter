@@ -36,3 +36,8 @@ Pro tip:
 4. But always mock your own APIs during integration testing - they're not as stable as AWS services and you know it!
 
 5. Use temporary stacks to run e2e tests
+
+Command create user
+```sh
+aws cognito-idp --region us-east-1 sign-up --client-id clientId --username quannar178@gmail.com --password ****** --user-attributes Name=name,Value=BAQUAN
+```
